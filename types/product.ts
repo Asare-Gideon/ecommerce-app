@@ -5,7 +5,7 @@ export interface Category {
     _id: string
     name: string
     slug: string
-    icon: string
+    icon?: string
     image?: string
 }
 

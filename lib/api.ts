@@ -2,7 +2,7 @@ import axios from "axios"
 import { getAuthTokens } from "../store/auth"
 
 // Create axios instance with base URL
-const API_URL = "http://192.168.137.58:5000/api/v1"
+const API_URL = "http://192.168.1.48:5000/api/v1"
 
 const api = axios.create({
     baseURL: API_URL,

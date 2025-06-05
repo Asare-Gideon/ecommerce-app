@@ -5,7 +5,7 @@ import { create } from "zustand"
 
 const DEFAULT_FILTERS: ProductFilters = {
     page: 1,
-    limit: 10,
+    limit: 8,
     sort: "popular",
     onlyPublished: true,
     onlyStock: true,
@@ -30,9 +30,11 @@ interface ProductState {
     filters: ProductFilters
     totalCount: number
     currentPage: number
-
+    defaultFilters: ProductFilters
+    product: Product | null
     // Actions
     fetchProducts: (resetFilters?: boolean) => Promise<void>
+    fetchProductById: (productId: string) => Promise<void>
     fetchMoreProducts: () => Promise<void>
     fetchPopularProducts: () => Promise<void>
     fetchCategories: () => Promise<void>
@@ -45,6 +47,7 @@ interface ProductState {
 export const useProductStore = create<ProductState>((set, get) => ({
     // Initial state
     products: [],
+    product: null,
     popularProducts: [],
     categories: staticCategories,
     banners: staticBanners,
@@ -55,6 +58,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
     filters: { ...DEFAULT_FILTERS },
     totalCount: 0,
     currentPage: 1,
+    defaultFilters: { ...DEFAULT_FILTERS },
 
     // Fetch main product listing
     fetchProducts: async (resetFilters = false) => {
@@ -72,11 +76,10 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
             const result = response.data
 
-            // Update state with filtered data
             set({
                 products: result.products,
                 totalCount: result.stats.total,
-                hasMore: true,
+                hasMore: result.stats.totalPages > get().currentPage,
                 isLoading: false,
             })
         } catch (error: any) {
@@ -86,18 +89,29 @@ export const useProductStore = create<ProductState>((set, get) => ({
             })
         }
     },
+    fetchProductById: async (productId: string) => {
+        try {
+            const response = await api.get<Product>(`/product/get-one/${productId}`)
+            set({ product: response.data })
+        } catch (error: any) {
+            console.error("Failed to fetch product by ID:", error)
+        }
+    },
 
-    // Load more products (pagination)
     fetchMoreProducts: async () => {
-        const { isLoadingMore, hasMore, filters, products } = get()
+        const { isLoadingMore, hasMore, filters, products, currentPage } = get()
 
         if (isLoadingMore || !hasMore) return
 
         try {
+            const nextPage = (filters.page || 1) + 1
+            console.log("currentPage", currentPage)
+            console.log("nextPage", nextPage)
+            if (currentPage >= nextPage) return
             set({ isLoadingMore: true })
 
-            const nextPage = (filters.page || 1) + 1
             const updatedFilters = { ...filters, page: nextPage }
+            console.log("updatedFilters", updatedFilters)
 
             const response = await api.get<{ stats: productStats, products: Product[] }>("product/query", {
                 params: updatedFilters,

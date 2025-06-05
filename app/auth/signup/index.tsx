@@ -303,6 +303,7 @@ export default function RegisterScreen() {
     )
 }
 
+
 const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,

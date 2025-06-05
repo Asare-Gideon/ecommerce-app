@@ -26,6 +26,9 @@ export function useProducts(initialFetch = true) {
         setFilters,
         resetFilters,
         clearError,
+        defaultFilters,
+        product,
+        fetchProductById,
     } = useProductStore()
 
     // Fetch initial data when the hook is mounted
@@ -55,6 +58,7 @@ export function useProducts(initialFetch = true) {
     return {
         // Data
         products,
+        product,
         popularProducts,
         categories,
         banners,
@@ -69,6 +73,7 @@ export function useProducts(initialFetch = true) {
         filters,
         totalCount,
         currentPage,
+        defaultFilters,
 
         // Actions
         fetchProducts,
@@ -79,6 +84,7 @@ export function useProducts(initialFetch = true) {
         setFilters,
         resetFilters,
         clearError,
+        fetchProductById,
 
         // Helper functions
         applyFilters,

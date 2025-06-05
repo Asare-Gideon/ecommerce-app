@@ -3,11 +3,14 @@ import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native"
 
 interface SearchBarProps {
   onSearch?: (text: string) => void
+  onPress?: () => void
+  onFilterPress?: () => void
+  editable?: boolean
 }
 
-export default function SearchBar({ onSearch }: SearchBarProps) {
+export default function SearchBar({ onSearch, onPress, onFilterPress, editable }: SearchBarProps) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress} disabled={editable}>
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={23} color="#9E9E9E" style={styles.searchIcon} />
         <TextInput
@@ -15,13 +18,15 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           placeholder="Search..."
           placeholderTextColor="#9E9E9E"
           onChangeText={onSearch}
+          editable={editable}
+          pointerEvents={editable ? "auto" : "none"}
         />
-        <TouchableOpacity style={styles.filterButton}>
+        <TouchableOpacity style={styles.filterButton} onPress={onFilterPress}>
           <Feather name="sliders" size={20} color="#000" />
         </TouchableOpacity>
       </View>
 
-    </View>
+    </TouchableOpacity>
   )
 }
 
