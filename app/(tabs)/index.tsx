@@ -53,6 +53,20 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
   const { cartCount } = useCart()
 
+  function getGreeting(): string {
+    const now = new Date();
+    const hour = now.getHours();
+
+    if (hour >= 5 && hour < 12) {
+      return "Good Morning!";
+    } else if (hour >= 12 && hour < 17) {
+      return "Good Afternoon!";
+    } else {
+      return "Good Evening!";
+    }
+  }
+
+
   const handleCategoryPress = (categoryId: string) => {
     router.push({
       pathname: "/pages/explore/" as any,
@@ -222,7 +236,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           <Image source={{ uri: "https://randomuser.me/api/portraits/men/32.jpg" }} style={styles.avatar} />
           <View>
             <Text style={styles.greeting}>Hello {user ? user?.firstName : "Guest"}</Text>
-            <Text style={styles.subGreeting}>Good Morning!</Text>
+            <Text style={styles.subGreeting}>{getGreeting()}</Text>
           </View>
         </View>
 
@@ -267,7 +281,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   flatListContent: {
-    paddingBottom: 20,
+    paddingBottom: 60,
   },
   header: {
     flexDirection: "row",
