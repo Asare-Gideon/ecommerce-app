@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#FAFAFA",
-        width: "100%",
     },
     header: {
         backgroundColor: "#FAFAFA",
@@ -239,9 +238,11 @@ const styles = StyleSheet.create({
     },
     productsRow: {
         justifyContent: "space-between",
+        backgroundColor: "red",
     },
     productCardContainer: {
         flex: 1,
+        maxWidth: (width - 60) / 2, // Account for padding and gap
         marginHorizontal: 4,
     },
     separator: {
