@@ -46,6 +46,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "0e1729ac-ed55-416c-af87-143a68a4bb1c"
+      }
+    },
+    "owner": "asaregid"
   }
 }
