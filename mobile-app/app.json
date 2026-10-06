@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ecommerce-app",
+    "name": "Ecommerce App",
     "slug": "ecommerce-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,6 +12,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.asaregideon.ecommerceapp",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
