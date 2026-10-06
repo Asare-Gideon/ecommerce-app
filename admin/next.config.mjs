@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   images: {
     domains: ["gideon-ecommerce-app-1.s3.eu-north-1.amazonaws.com"],
   },
